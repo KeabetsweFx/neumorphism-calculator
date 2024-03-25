@@ -1,38 +1,22 @@
-import { Feather } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Box, Text, useTheme } from 'theme';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import Details from '../screens/details';
-import Overview from '../screens/overview';
+import { Calculator } from "~/screens/calculator";
 
 export type RootStackParamList = {
-  Overview: undefined;
-  Details: { name: string };
+  Calculator: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function RootStack() {
-  const { colors } = useTheme();
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Overview">
-        <Stack.Screen name="Overview" component={Overview} />
+      <Stack.Navigator initialRouteName="Calculator">
         <Stack.Screen
-          name="Details"
-          component={Details}
-          options={({ navigation }) => ({
-            headerLeft: () => (
-              <Box flexDirection="row" paddingLeft="m_16">
-                <Feather name="chevron-left" size={16} color={colors.blue} />
-                <Text marginLeft="xs_4" color="blue" onPress={navigation.goBack}>
-                  Back
-                </Text>
-              </Box>
-            ),
-          })}
+          name="Calculator"
+          component={Calculator}
+          options={{ header: () => null }}
         />
       </Stack.Navigator>
     </NavigationContainer>
