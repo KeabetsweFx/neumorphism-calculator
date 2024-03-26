@@ -41,7 +41,7 @@ export function Calculator() {
         {keys.map((row, index) => (
           <Box key={index.toString()} flexDirection="row" gap="$space.3">
             {row.map((key) => {
-              const isSpread = key === "0" && row.length === 3;
+              const isSpread = key === "0";
               return (
                 <CalculatorButton
                   key={key}

@@ -83,10 +83,6 @@ const theme = createTheme({
       lineHeight: 13,
       fontFamily: "Poppins-Regular",
     },
-    "calculator-button": {
-      fontSize: 23,
-      fontFamily: "Poppins-Regular",
-    },
     "calculator-display": {
       fontSize: 56,
       fontFamily: "Poppins-Regular",
@@ -94,6 +90,40 @@ const theme = createTheme({
     },
     defaults: {
       // We can define a default text variant here.
+    },
+  },
+  calculatorKeyInnerShadow: {
+    defaults: {
+      flex: 1,
+      shadowOffset: { height: 4, width: 4 },
+      shadowRadius: 4,
+    },
+    gray: {
+      shadowColor: "heather",
+      backgroundColor: "cadet-blue-50",
+    },
+    orange: {
+      backgroundColor: "hot-cinnamon",
+      shadowColor: "zeus-50",
+    },
+    white: {
+      backgroundColor: "mystic",
+      shadowColor: "mystic-20",
+    },
+  },
+  calculatorKeyText: {
+    defaults: {
+      fontSize: 23,
+      fontFamily: "Poppins-Regular",
+    },
+    gray: {
+      color: "charade",
+    },
+    orange: {
+      color: "white",
+    },
+    white: {
+      color: "charade",
     },
   },
 });

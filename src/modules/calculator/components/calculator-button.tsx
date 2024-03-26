@@ -1,9 +1,15 @@
+import {
+  type VariantProps,
+  createRestyleComponent,
+  createVariant,
+} from "@shopify/restyle";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { makeStyles, useTheme } from "~/theme";
+import type { Theme } from "~/theme";
+import { makeStyles } from "~/theme";
 import { Colors } from "~/theme/colors";
 import type { icons } from "~/theme/svg-icons";
 import { Box } from "~/ui/layout";
@@ -12,31 +18,10 @@ import { VectorIcon } from "~/ui/vector-icon";
 
 import { BUTTON_SIZE, BUTTON_SPACING } from "./constants";
 
-const KeyStyles = {
-  gray: {
-    gradient: [Colors["cadet-blue-100"], Colors["blue-haze"]],
-    styles: {
-      shadowColor: Colors.heather,
-      backgroundColor: Colors["cadet-blue-50"],
-    },
-    textColor: "charade",
-  },
-  orange: {
-    gradient: [Colors["orange-roughy"], Colors.zest],
-    styles: {
-      shadowColor: Colors["zeus-50"],
-      backgroundColor: Colors["hot-cinnamon"],
-    },
-    textColor: "white",
-  },
-  white: {
-    gradient: [Colors.mischka, Colors["athens-gray"]],
-    styles: {
-      backgroundColor: Colors.mystic,
-      shadowColor: Colors["mystic-20"],
-    },
-    textColor: "charade",
-  },
+const KeyGradients: Record<string, string[]> = {
+  gray: [Colors["cadet-blue-100"], Colors["blue-haze"]],
+  orange: [Colors["orange-roughy"], Colors.zest],
+  white: [Colors.mischka, Colors["athens-gray"]],
 } as const;
 
 const Operators: Record<string, keyof typeof icons> = {
@@ -53,50 +38,54 @@ const OrangeGroup = ["/", "x", "-", "+", "="];
 
 export function CalculatorButton(props: ButtonProps) {
   const styles = useStyles();
-  const theme = useTheme();
-  const { label, isSpread, onKeyPress } = props;
+  const { label: key, isSpread, onKeyPress } = props;
   const spreadStyle = isSpread ? styles.spread : styles.normal;
-  const {
-    gradient,
-    styles: inner,
-    textColor,
-  } = useMemo(() => {
-    if (GrayGroup.includes(label)) return KeyStyles.gray;
-    if (OrangeGroup.includes(label)) return KeyStyles.orange;
-    return KeyStyles.white;
-  }, [label]);
+  const variant = useMemo(() => {
+    if (GrayGroup.includes(key)) return "gray";
+    if (OrangeGroup.includes(key)) return "orange";
+    return "white";
+  }, [key]);
 
   const renderButtonContent = useCallback(() => {
-    const color = theme.colors[textColor];
-    if (Operators[label])
-      return <VectorIcon name={Operators[label]} color={color} />;
-    return (
-      <Text variant="calculator-button" color={textColor}>
-        {label}
-      </Text>
-    );
-  }, [label, theme.colors, textColor]);
+    if (Operators[key]) {
+      const color = variant === "orange" ? Colors.white : Colors.charade;
+      return <VectorIcon name={Operators[key]} color={color} />;
+    }
+
+    return <ButtonText variant={variant}>{key}</ButtonText>;
+  }, [key, variant]);
 
   return (
     <TouchableOpacity
-      onPress={() => onKeyPress?.(label)}
+      onPress={() => onKeyPress?.(key)}
       style={[styles.button, spreadStyle]}
       activeOpacity={0.7}
     >
-      <Box style={[styles.container, inner]}>
+      <InnerShadow style={styles.container} variant={variant}>
         <LinearGradient
           style={styles.content}
-          colors={[gradient[0], gradient[1]]}
+          colors={KeyGradients[variant]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
           <BlurView style={StyleSheet.absoluteFill} intensity={2} />
           {renderButtonContent()}
         </LinearGradient>
-      </Box>
+      </InnerShadow>
     </TouchableOpacity>
   );
 }
+
+const InnerShadow = createRestyleComponent<
+  VariantProps<Theme, "calculatorKeyInnerShadow"> &
+    React.ComponentProps<typeof Box>,
+  Theme
+>([createVariant({ themeKey: "calculatorKeyInnerShadow" })], Box);
+
+const ButtonText = createRestyleComponent<
+  VariantProps<Theme, "calculatorKeyText"> & React.ComponentProps<typeof Box>,
+  Theme
+>([createVariant({ themeKey: "calculatorKeyText" })], Text);
 
 type ButtonProps = {
   onKeyPress?: (key: string) => void;
@@ -113,11 +102,8 @@ const useStyles = makeStyles((theme) => ({
     shadowRadius: 7,
   },
   container: {
-    flex: 1,
     borderRadius: 23,
     padding: 7,
-    shadowOffset: { height: 4, width: 4 },
-    shadowRadius: 4,
   },
   content: {
     flex: 1,

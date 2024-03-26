@@ -1,6 +1,6 @@
 import { useCallback, useReducer } from "react";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: State = {
   display: "0",
   firstOperand: null,
   operator: null,
