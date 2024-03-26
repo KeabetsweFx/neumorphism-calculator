@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Calculator } from "~/screens/calculator";
+import { CalculatorScreen } from "~/screens/calculator";
 
 export type RootStackParamList = {
   Calculator: undefined;
@@ -15,7 +15,7 @@ export default function RootStack() {
       <Stack.Navigator initialRouteName="Calculator">
         <Stack.Screen
           name="Calculator"
-          component={Calculator}
+          component={CalculatorScreen}
           options={{ header: () => null }}
         />
       </Stack.Navigator>

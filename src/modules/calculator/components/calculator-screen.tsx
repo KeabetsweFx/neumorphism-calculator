@@ -15,7 +15,7 @@ const keys = [
   ["0", ".", "="],
 ];
 
-export function Calculator() {
+export function CalculatorScreen() {
   const styles = useStyles();
   const theme = useTheme();
   const { display, handleOnKeyPress } = useCalculator();

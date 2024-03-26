@@ -1,1 +1,1 @@
-export { Calculator } from "~/modules/calculator/components/Calculator";
+export { CalculatorScreen } from "~/modules/calculator/components/calculator-screen";

@@ -18,7 +18,7 @@ import { VectorIcon } from "~/ui/vector-icon";
 
 import { BUTTON_SIZE, BUTTON_SPACING } from "./constants";
 
-const KeyGradients: Record<string, string[]> = {
+const KeyGradientColors: Record<string, string[]> = {
   gray: [Colors["cadet-blue-100"], Colors["blue-haze"]],
   orange: [Colors["orange-roughy"], Colors.zest],
   white: [Colors.mischka, Colors["athens-gray"]],
@@ -64,7 +64,7 @@ export function CalculatorButton(props: ButtonProps) {
       <InnerShadow style={styles.container} variant={variant}>
         <LinearGradient
           style={styles.content}
-          colors={KeyGradients[variant]}
+          colors={KeyGradientColors[variant]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
