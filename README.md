@@ -43,7 +43,7 @@ A modern calculator with a beautiful neumorphic design built using React Native 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/neumorphism-calculator.git
+git clone https://github.com/KeabetsweFx/neumorphism-calculator.git
 ```
 
 2. Install dependencies:
