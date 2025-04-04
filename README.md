@@ -31,6 +31,7 @@ A modern calculator with a beautiful neumorphic design built using React Native 
 - Expo Blur
 - React Native SVG
 - React Native Gesture Handler
+- Design based on [Figma Calculator Design](https://www.figma.com/community/file/1225131179575127817)
 
 ## Prerequisites
 
@@ -95,5 +96,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
+- Design based on [Figma Calculator Design](https://www.figma.com/community/file/1225131179575127817)
 - Inspired by modern neumorphic design trends
 - Built with ❤️ using React Native and Expo
